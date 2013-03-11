@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+	<TextView
+    	android:id="@+id/txtData"
+    	android:gravity="center"
+    	android:textSize="10sp"
+		android:textIsSelectable="false" />
+	
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/txtNomLocal"
+            android:ellipsize="end"
+            android:maxEms="7"
+            android:singleLine="true"
+            android:paddingRight="4sp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/txtGolsLocal"
+            android:minEms="1"
+            android:background="#AA0000"
+            android:gravity="center"
+            android:paddingLeft="1sp"
+            android:paddingRight="1sp"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:text=" - "
+            android:textIsSelectable="false" />
+        
+        <TextView
+            android:id="@+id/txtGolsVisitant"
+            android:minEms="1"
+            android:background="#AA0000"
+            android:gravity="center"
+            android:paddingLeft="1sp"
+            android:paddingRight="1sp"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/txtNomVisitant"
+            android:ellipsize="end"
+            android:maxEms="7"
+            android:singleLine="true"
+            android:paddingLeft="4sp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textIsSelectable="false" />
+    </TableRow>
+    
+</TableLayout>

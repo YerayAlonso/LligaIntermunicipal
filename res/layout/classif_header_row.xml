@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#336699"
+    android:orientation="horizontal"
+    android:paddingBottom="5sp"
+    android:paddingTop="5sp"
+    android:stretchColumns="1" >
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/txtPosisio"
+            android:gravity="center"
+            android:paddingLeft="2sp"
+            android:text="Pos"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="false"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtNomEquip"
+            android:gravity="center"
+            android:text="Equip"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="false"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtPunts"
+            android:gravity="center"
+            android:paddingRight="2sp"
+            android:text="Punts"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="false"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtJugats"
+            android:gravity="center"
+            android:paddingRight="2sp"
+            android:text="PJ"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/txtGuanyats"
+            android:gravity="center"
+            android:paddingRight="2sp"
+            android:text="PG"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/txtEmpatats"
+            android:gravity="center"
+            android:paddingRight="2sp"
+            android:text="PE"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/txtPerduts"
+            android:gravity="center"
+            android:paddingRight="2sp"
+            android:text="PP"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/txtNp"
+            android:gravity="center"
+            android:paddingRight="2sp"
+            android:text="NP"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/txtGolsF"
+            android:gravity="center"
+            android:paddingRight="2sp"
+            android:text="GF"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/txtGolsC"
+            android:gravity="center"
+            android:paddingRight="2sp"
+            android:text="GC"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="false" />
+    </TableRow>
+
+</TableLayout>
