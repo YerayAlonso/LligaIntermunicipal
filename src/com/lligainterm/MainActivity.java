@@ -79,12 +79,12 @@ public class MainActivity extends SherlockActivity implements ActionBar.TabListe
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		ActionBar.Tab tab = getSupportActionBar().newTab();
-		tab.setText("Classificació");
+		tab.setText(R.string.tab_classif);
 		tab.setTabListener(this);
 		getSupportActionBar().addTab(tab);
 
 		tab = getSupportActionBar().newTab();
-		tab.setText("Resultats");
+		tab.setText(R.string.tab_result);
 		tab.setTabListener(this);
 		getSupportActionBar().addTab(tab);
 	}
