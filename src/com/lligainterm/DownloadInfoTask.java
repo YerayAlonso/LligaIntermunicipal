@@ -27,6 +27,7 @@ public class DownloadInfoTask extends AsyncTask<String, Integer, String> {
 
 	private Context cont;
 	private String jornada;
+	private Fase fase;
 	
 	// Do the long-running work in here
 	protected String doInBackground(String... urls) {
@@ -43,12 +44,12 @@ public class DownloadInfoTask extends AsyncTask<String, Integer, String> {
 	public void setJornada(String jornada) {
 		this.jornada = jornada;
 	}
+	
+	public void setFase(Fase fase) {
+		this.fase = fase;
+	}
 
-	private String readFromURL(String URLString) throws IOException {		
-		/*
-		 * String id_temporada = "223"; String id_esport = "4"; String
-		 * id_categoria = "13"; String grup = "FS 12-13";
-		 */
+	private String readFromURL(String URLString) throws IOException { 
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(URLString);
 
@@ -57,7 +58,7 @@ public class DownloadInfoTask extends AsyncTask<String, Integer, String> {
 		nameValuePairs.add(new BasicNameValuePair("id_temporada", "223"));
 		nameValuePairs.add(new BasicNameValuePair("id_esport", "4"));
 		nameValuePairs.add(new BasicNameValuePair("id_categoria", "13"));
-		nameValuePairs.add(new BasicNameValuePair("grup", "FS 12-13"));
+		nameValuePairs.add(new BasicNameValuePair("grup", fase.grup));
 		nameValuePairs.add(new BasicNameValuePair("jornada", jornada));
 
 		post.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));

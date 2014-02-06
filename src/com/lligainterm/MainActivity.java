@@ -2,50 +2,42 @@ package com.lligainterm;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import net.simonvt.menudrawer.MenuDrawer;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
-public class MainActivity extends SherlockActivity implements ActionBar.TabListener {
+public class MainActivity extends SherlockActivity implements ActionBar.TabListener, MenuAdapter.MenuListener {
 
 	private String ResClasURL = "http://www.girona.cat/gestio_esportiva/resultats_classificacions/pdf_res_clas.php?";
 	// www.girona.cat/gestio_esportiva/resultats_classificacions/mostra_res_clas.php?id_temporada="223"&id_esport="4"&id_categoria="13"&grup="FS 12-13"
 	
-	//NOTA: els mesos comencen al 0 pel gener 
-	private Date datesJornades[] = {new GregorianCalendar(2012, 10, 5).getTime(),
-							  new GregorianCalendar(2012, 10, 12).getTime(),
-							  new GregorianCalendar(2012, 10, 19).getTime(),
-							  new GregorianCalendar(2012, 10, 26).getTime(),
-							  new GregorianCalendar(2012, 10, 10).getTime(),
-							  new GregorianCalendar(2012, 10, 17).getTime(),
-							  new GregorianCalendar(2013, 0, 7).getTime(),
-							  new GregorianCalendar(2013, 0, 14).getTime(),
-							  new GregorianCalendar(2013, 0, 21).getTime(),
-							  new GregorianCalendar(2013, 0, 28).getTime(),
-							  new GregorianCalendar(2013, 1, 4).getTime(),
-							  new GregorianCalendar(2013, 1, 11).getTime(),
-							  new GregorianCalendar(2013, 1, 18).getTime(),
-							  new GregorianCalendar(2013, 1, 25).getTime(),
-							  new GregorianCalendar(2013, 2, 4).getTime(),
-							  new GregorianCalendar(2013, 2, 11).getTime(),
-							  new GregorianCalendar(2013, 2, 18).getTime()};
-		
-	private ListView classifView, resultView;
+	private Date datesJornades[] = Dates.t1213;
 	private Equip equip_data[][];
 	private Partit jornades[][];
+	
+	private Temporada temporada[];
+	
+	private ListView classifView, resultView;
 	private int nJornadaAct, nJornada;
 	private View activity_classif, activity_result;
 	private TextView tvJornada;
@@ -56,6 +48,8 @@ public class MainActivity extends SherlockActivity implements ActionBar.TabListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		//addTemporades();
 		
 		equip_data = new Equip[nEquips-1][nEquips];
 		jornades = new Partit[nEquips-1][nEquips/2];
@@ -72,7 +66,16 @@ public class MainActivity extends SherlockActivity implements ActionBar.TabListe
 		resultView.addHeaderView(header_result);
 		tvJornada = (TextView) header_result.findViewById(R.id.txtJornada);
 		
+		faseActual = new Fase("1a Fase", R.drawable.yellow, 1213, 1);
+		addMenu();
 		addTabs();
+	}
+	
+	private void addTemporades() {
+		temporada = new Temporada[2];
+		
+		temporada[0].datesJornades = Dates.t1213;
+		temporada[1].datesJornades = Dates.t1314;
 	}
 
 	private void addTabs() {
@@ -89,6 +92,58 @@ public class MainActivity extends SherlockActivity implements ActionBar.TabListe
 		getSupportActionBar().addTab(tab);
 	}
 
+	private MenuDrawer mMenuDrawer;
+	protected MenuAdapter mAdapter;
+	protected ListView mList;
+	private int mActivePosition = 0;
+	private Fase faseActual;
+	
+	private void addMenu() {
+		mMenuDrawer = MenuDrawer.attach(this);
+
+		List<Object> items = new ArrayList<Object>();
+		items.add(new Category("Futbol Sala '13-'14"));
+		items.add(new Fase("1a Fase", R.drawable.green, 1314, 1));
+		items.add(new Fase("2a Fase", R.drawable.yellow, 1314, 2));
+		items.add(new Fase("3a Fase", R.drawable.red, 1314, 3));
+		items.add(new Category("Futbol Sala '12-'13"));
+		items.add(new Fase("1a Fase", R.drawable.yellow, 1213, 1));
+		items.add(new Fase("2a Fase", R.drawable.red, 1213, 2));
+		
+        mList = new ListView(this);
+        mAdapter = new MenuAdapter(this, items);
+        mAdapter.setListener(this);
+        mAdapter.setActivePosition(mActivePosition);
+        mList.setAdapter(mAdapter);
+        mList.setOnItemClickListener(mItemClickListener);
+        mMenuDrawer.setMenuView(mList);
+		mMenuDrawer.setSlideDrawable(R.drawable.ic_drawer);
+		mMenuDrawer.setDrawerIndicatorEnabled(true);
+	}
+	
+    private AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            mActivePosition = position;
+            mMenuDrawer.setActiveView(view, position);
+            mAdapter.setActivePosition(position);
+            onMenuItemClicked(position, (Fase) mAdapter.getItem(position));
+        }
+    };
+    
+    protected void onMenuItemClicked(int position, Fase item) {
+    	//canvi temporada
+    	
+    	if (((item.nTemporada == 1213) && (item.nFase == 2)) ||
+    		((item.nTemporada == 1314) && (item.nFase > 1))) {
+    		Toast toast = Toast.makeText(getApplicationContext(), "Fase no disponible", Toast.LENGTH_SHORT);
+    		toast.show();
+    	}
+    	else {
+    		mMenuDrawer.closeMenu();
+    	}
+    }
+	
 	private int getNJornadaActual() {
 		int result = 1;
 		Date avui = new Date();
@@ -104,6 +159,7 @@ public class MainActivity extends SherlockActivity implements ActionBar.TabListe
 		setSupportProgressBarIndeterminateVisibility(true);
 		DownloadInfoTask downloadTask = new DownloadInfoTask();
 		downloadTask.setContext(this);
+		downloadTask.setFase(faseActual);
 		downloadTask.setJornada(String.valueOf(j));
 		downloadTask.execute(ResClasURL);
 
@@ -227,7 +283,7 @@ public class MainActivity extends SherlockActivity implements ActionBar.TabListe
 			
 			EquipAdapter classifAdapter = new EquipAdapter(this, R.layout.classif_item_row, equip_data[nJornada-1]);
 			classifView.setAdapter(classifAdapter);
-			setContentView(activity_classif);
+			mMenuDrawer.setContentView(activity_classif);
 			break;
 		case 1:
 			if (jornades[nJornada-1][0] == null)
@@ -236,7 +292,7 @@ public class MainActivity extends SherlockActivity implements ActionBar.TabListe
 			PartitAdapter partitAdapter = new PartitAdapter(this, R.layout.resultats_item_row, jornades[nJornada-1]);
 			tvJornada.setText("Jornada " + String.valueOf(nJornadaAct));
 			resultView.setAdapter(partitAdapter);
-			setContentView(activity_result);
+			mMenuDrawer.setContentView(activity_result);
 			break;
 		default:
 			break;
@@ -250,5 +306,31 @@ public class MainActivity extends SherlockActivity implements ActionBar.TabListe
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
 	}
+	
+    @Override
+    public void onBackPressed() {
+        final int drawerState = mMenuDrawer.getDrawerState();
+        if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) {
+            mMenuDrawer.closeMenu();
+            return;
+        }
 
+        super.onBackPressed();
+    }
+
+	@Override
+	public void onActiveViewChanged(View v) {
+		mMenuDrawer.setActiveView(v, mActivePosition);
+	}
+	
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+            	mMenuDrawer.toggleMenu();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
