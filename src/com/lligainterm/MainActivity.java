@@ -131,11 +131,11 @@ public class MainActivity extends SherlockActivity implements ActionBar.TabListe
         }
     };
     
-    protected void onMenuItemClicked(int position, Fase item) {
+    protected void onMenuItemClicked(int position, Fase fase) {
     	//canvi temporada
     	
-    	if (((item.nTemporada == 1213) && (item.nFase == 2)) ||
-    		((item.nTemporada == 1314) && (item.nFase > 1))) {
+    	if (((fase.nTemporada == 1213) && (fase.nFase == 2)) ||
+    		((fase.nTemporada == 1314) && (fase.nFase > 1))) {
     		Toast toast = Toast.makeText(getApplicationContext(), "Fase no disponible", Toast.LENGTH_SHORT);
     		toast.show();
     	}
