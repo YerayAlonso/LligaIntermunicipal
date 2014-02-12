@@ -39,12 +39,11 @@ public class Dates {
 	public static final Date t1314[] = {
 		
 		//1a Fase 2012 - 2013
-		new GregorianCalendar(2012, 9, 14).getTime(),
-		new GregorianCalendar(2012, 9, 21).getTime(),
-		new GregorianCalendar(2012, 10, 4).getTime(),
-		new GregorianCalendar(2012, 10, 26).getTime(),
-		new GregorianCalendar(2012, 10, 11).getTime(),
-		new GregorianCalendar(2012, 10, 18).getTime(),
+		new GregorianCalendar(2013, 9, 14).getTime(),
+		new GregorianCalendar(2013, 9, 21).getTime(),
+		new GregorianCalendar(2013, 10, 4).getTime(),
+		new GregorianCalendar(2013, 10, 11).getTime(),
+		new GregorianCalendar(2013, 10, 18).getTime(),
 		new GregorianCalendar(2013, 10, 25).getTime(),
 		new GregorianCalendar(2013, 11, 2).getTime(),
 		new GregorianCalendar(2013, 11, 9).getTime(),

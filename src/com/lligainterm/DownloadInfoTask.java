@@ -19,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfTextExtractor;
@@ -55,12 +56,12 @@ public class DownloadInfoTask extends AsyncTask<String, Integer, String> {
 
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
-		nameValuePairs.add(new BasicNameValuePair("id_temporada", "223"));
-		nameValuePairs.add(new BasicNameValuePair("id_esport", "4"));
-		nameValuePairs.add(new BasicNameValuePair("id_categoria", "13"));
+		nameValuePairs.add(new BasicNameValuePair("id_temporada", fase.id_temporada));
+		nameValuePairs.add(new BasicNameValuePair("id_esport", fase.id_esport));
+		nameValuePairs.add(new BasicNameValuePair("id_categoria", fase.id_categoria));
 		nameValuePairs.add(new BasicNameValuePair("grup", fase.grup));
 		nameValuePairs.add(new BasicNameValuePair("jornada", jornada));
-
+		
 		post.setEntity(new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8));
 		HttpResponse response = null;
 		try {
