@@ -4,12 +4,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import net.simonvt.menudrawer.MenuDrawer;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -48,8 +46,6 @@ public class MainActivity extends SherlockActivity implements ActionBar.TabListe
 		addTemporades();
 		setTemporada(1);
 		
-		temporada[nTemporadaAct].equip_data = new Equip[temporada[nTemporadaAct].nEquips-1][temporada[nTemporadaAct].nEquips];
-		temporada[nTemporadaAct].jornades = new Partit[temporada[nTemporadaAct].nEquips-1][temporada[nTemporadaAct].nEquips/2];
 		nJornadaAct = getNJornadaActual();
 		
 		LayoutInflater inflator = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -91,6 +87,11 @@ public class MainActivity extends SherlockActivity implements ActionBar.TabListe
 		
 		temporada[0].nEquips = 18;
 		temporada[1].nEquips = 14;
+		
+		for (int i=0; i<temporada.length; i++) {
+			temporada[i].equip_data = new Equip[temporada[i].nEquips-1][temporada[i].nEquips];
+			temporada[i].jornades = new Partit[temporada[i].nEquips-1][temporada[i].nEquips/2];
+		}
 	}
 
 	private void addTabs() {
@@ -201,7 +202,7 @@ public class MainActivity extends SherlockActivity implements ActionBar.TabListe
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-		Log.i("info", myLine);
+		//Log.i("info", myLine);
 		
 		int startLine = 9 + (temporada[nTemporadaAct].nEquips / 2);
 		int endLine = startLine + temporada[nTemporadaAct].nEquips - 1;
